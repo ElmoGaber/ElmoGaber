@@ -69,7 +69,7 @@
           <td><a href="https://www.linkedin.com/in/momen-tarek2004/"><img src="https://img.shields.io/badge/LinkedIn-Profile-blue?style=for-the-badge&logo=linkedin" alt="LinkedIn"/></a></td>
       </tr>
       <tr>
-          <td><a href="https://github.com/ELMOtarek1"><img src="https://img.shields.io/badge/GitHub-Profile-green?style=for-the-badge&logo=github" alt="GitHub"/></a></td>
+          <td><a href="https://github.com/ElmoGaber"><img src="https://img.shields.io/badge/GitHub-Profile-green?style=for-the-badge&logo=github" alt="GitHub"/></a></td>
       </tr>
       <tr>
           <td><a href="https://www.kaggle.com/momentarek1"><img src="https://img.shields.io/badge/Kaggle-Profile-orange?style=for-the-badge&logo=kaggle" alt="Kaggle"/></a></td>
