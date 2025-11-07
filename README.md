@@ -90,17 +90,6 @@
 <p align="center"> <img src="https://komarev.com/ghpvc/?username=umar885&label=Profile%20views&color=0e75b6&style=flat" alt="umar885" /> </p>
 
 
-<div align="center">
-  <h2>🛠 Languages and Tools</h2>
-  <div align="left">
-    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" height="40" alt="Python logo" />
-    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sqlite/sqlite-original.svg" height="40" alt="SQL logo" />
-    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pandas/pandas-original.svg" height="40" alt="Pandas logo" />
-    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/numpy/numpy-original.svg" height="40" alt="NumPy logo" />
-
-
-
-  </div>
 </div>
 
 ---
