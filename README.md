@@ -23,7 +23,7 @@
     - 🤝 I prioritize effective communication, collaboration, and problem-solving to drive results and contribute to team success.
     
   </p>
-</div>
+ </div>
 
 ---
 
