@@ -196,12 +196,11 @@
           <td><a href="https://www.kaggle.com/momentarek1"><img src="https://img.shields.io/badge/Kaggle-Profile-orange?style=for-the-badge&logo=kaggle" alt="Kaggle"/></a></td>
       </tr>
       <tr>
-          <td><a href="https://stackoverflow.com/users/22954026"><img src="https://img.shields.io/badge/-Stackoverflow-FE7A16?logo=stack-overflow&logoColor=white"/></a></td>
+          <td><a href="https://stackoverflow.com/users/22954026"><img src="https://img.shields.io/badge/-Stackoverflow-FE7A16?style=for-the-badge&logo=Stackoverflow"alt="Stackoverflow"/></a></td>
       </tr>
   </table>
 </div>
 
-<p align="center"> <img src="https://komarev.com/ghpvc/?username=umar885&label=Profile%20views&color=0e75b6&style=flat" alt="umar885" /> </p>
 
 
 </div>
