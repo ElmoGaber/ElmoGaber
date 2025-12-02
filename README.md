@@ -100,6 +100,28 @@
 
 </div>
 
+</div>
+
+#### 🏆 GitHub Trophies
+<div align="center">
+
+  <img src="https://github-profile-trophy-ahmed.vercel.app/?username=mohamed20384&theme=onestar&no-bg=true&no-frame=true&row=1&column=7" alt="GitHub Trophies" />
+
+  <br><br>
+  
+  <!-- <img src="https://raw.githubusercontent.com/platane/snk/output/github-contribution-grid-snake-dark.svg" alt="GitHub Snake Animation" /> -->
+
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/mohamed20384/mohamed20384/output/pacman-contribution-graph-dark.svg">
+    <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/mohamed20384/mohamed20384/output/pacman-contribution-graph.svg">
+    <img alt="pacman contribution graph" src="https://raw.githubusercontent.com/mohamed20384/mohamed20384/output/pacman-contribution-graph.svg">
+  </picture>
+
+
+</div>
+
+
+
 ---
 
 
