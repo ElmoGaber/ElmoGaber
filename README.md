@@ -58,6 +58,11 @@
 ## 🏆 GitHub Trophies
 ![](https://github-profile-trophy.vercel.app/?username=ELMOtarek1&theme=radical&no-frame=false&no-bg=true&margin-w=4)
 
+<div align="center">
+
+  <img src="https://github-profile-trophy-ahmed.vercel.app/?username=mohamed20384&theme=onestar&no-bg=true&no-frame=true&row=1&column=7" alt="GitHub Trophies" />
+
+
 ### ✍️ Random Dev Quote
 ![](https://quotes-github-readme.vercel.app/api?type=horizontal&theme=radical)
 
@@ -101,11 +106,6 @@
 </div>
 
 </div>
-
-#### 🏆 GitHub Trophies
-<div align="center">
-
-  <img src="https://github-profile-trophy-ahmed.vercel.app/?username=mohamed20384&theme=onestar&no-bg=true&no-frame=true&row=1&column=7" alt="GitHub Trophies" />
 
   <br><br>
   
