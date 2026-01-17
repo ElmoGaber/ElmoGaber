@@ -34,6 +34,7 @@
   <!-- Replace with an animated coding GIF -->
   <img height="200" src="https://media.giphy.com/media/qgQUggAC3Pfv687qPC/giphy.gif" alt="Coding Animation">
 </div>
+
   #### `📤 Connect & Competitive Programming`
   <div align="center">
   <a href="https://www.linkedin.com/in/momen-tarek2004" target="_blank">
