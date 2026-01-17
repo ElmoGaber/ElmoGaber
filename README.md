@@ -30,7 +30,10 @@
     <a href="https://elmogaber.github.io/portfolio/">
       <img src="https://img.shields.io/badge/My Portfolio-00307A?style=flat-square&logo=linkfire&logoColor=white" style="height:32px; object-fit:contain;"/></a>
   </p>
-
+<div align="center">
+  <!-- Replace with an animated coding GIF -->
+  <img height="200" src="https://media.giphy.com/media/qgQUggAC3Pfv687qPC/giphy.gif" alt="Coding Animation">
+</div>
   #### `📤 Connect & Competitive Programming`
   <div align="center">
   <a href="https://www.linkedin.com/in/momen-tarek2004" target="_blank">
@@ -109,10 +112,6 @@
   <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/opengl/opengl-original.svg" height="60" alt="opengl logo"  />
 </div>
 
-<div align="center">
-  <!-- Replace with an animated coding GIF -->
-  <img height="200" src="https://media.giphy.com/media/qgQUggAC3Pfv687qPC/giphy.gif" alt="Coding Animation">
-</div>
 
 <div align="center">
   <h2>👨‍💻 About Me</h2>
