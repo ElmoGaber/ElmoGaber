@@ -1,6 +1,6 @@
 <div align="center">
   <h1>Hi  👋, I'm Momen Tarek</h1>
-  <p>Welcome to my GitHub profile! 🚀 I am passionate about AI software development, Business Intelligence, and creating impactful visualizations.</p>
+  <p>Welcome to my GitHub profile! 🚀 I am passionate about AI software development, Business Intelligence, and creating impactful Web Visualizations.</p>
 </div>
 
 ---
