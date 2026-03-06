@@ -1,6 +1,10 @@
+<!-- Banner with name and tagline on separate lines -->
+<img src="https://capsule-render.vercel.app/api?type=waving&height=350&color=gradient&text=Our%20slogan:%0ATransforming%20Ideas%20into%20Reality&fontSize=30&fontColor=ffffff&animation=fadeIn" alt="Banner" />
+
 <div align="center">
   <h1>Hi  👋, I'm Momen Tarek</h1>
-  <p>Welcome to my GitHub profile! 🚀 I am passionate about AI software development, Business Intelligence, and creating impactful Web Visualizations.</p>
+  <p>Welcome to my GitHub profile! 🚀 I am passionate about AI software development, Business Intelligence, and creating impactful visualizations.</p>
+  
 </div>
 
 ---
@@ -9,18 +13,18 @@
 </div>
 
 <p align="center">
-  <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=25&pause=1000&color=00FFFF&center=true&vCenter=true&width=600&lines=AI+Engineer;Full+Stack" alt="Typing SVG" />
+  <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=25&pause=1000&color=00FFFF&center=true&vCenter=true&width=600&lines=AI+Specialist;Full+Stack+Engineer" alt="Typing SVG" />
 </p>
 
 <br>
 
   <p align="center">
-    <a href="https://www.google.com.eg/search?q=mohamed20384"> <!-- Google Me -->
+    <a href="https://www.google.com.eg/search?q=ElmoGaber"> <!-- Google Me -->
       <img src="https://readme-typing-svg.herokuapp.com/?lines=Follow%20to%20get%20New%20Updates;Check%20my%20Popular%20Repositories&font=Bold%20Code&center=true&color=30F050&pause=2000"></a>
   </p>
 
   <p align="center">
-    <a href="https://www.google.com.eg/search?q=mohamed20384"> <!-- Google Me -->
+    <a href="https://www.google.com.eg/search?q=ElmoGaber"> <!-- Google Me -->
       <img src="https://komarev.com/ghpvc/?username=mohamed20384&style=flat&color=3010A0" style="height:26px; object-fit:contain;"/></a>
   </p>
 
@@ -30,10 +34,6 @@
     <a href="https://elmogaber.github.io/portfolio/">
       <img src="https://img.shields.io/badge/My Portfolio-00307A?style=flat-square&logo=linkfire&logoColor=white" style="height:32px; object-fit:contain;"/></a>
   </p>
-<div align="center">
-  <!-- Replace with an animated coding GIF -->
-  <img height="200" src="https://media.giphy.com/media/qgQUggAC3Pfv687qPC/giphy.gif" alt="Coding Animation">
-</div>
 
   #### `📤 Connect & Competitive Programming`
   <div align="center">
@@ -113,6 +113,10 @@
   <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/opengl/opengl-original.svg" height="60" alt="opengl logo"  />
 </div>
 
+<div align="center">
+  <!-- Replace with an animated coding GIF -->
+  <img height="200" src="https://media.giphy.com/media/qgQUggAC3Pfv687qPC/giphy.gif" alt="Coding Animation">
+</div>
 
 <div align="center">
   <h2>👨‍💻 About Me</h2>
@@ -165,7 +169,7 @@
 [![](https://visitcount.itsvg.in/api?id=ELMOtarek1&icon=0&color=0)](https://visitcount.itsvg.in)
 
   ## 💰 You can help me by Donating
-  [![PayPal](https://img.shields.io/badge/PayPal-00457C?style=for-the-badge&logo=paypal&logoColor=white)](https://paypal.me/MomenTarek0) 
+  [![PayPal](https://img.shields.io/badge/PayPal-00457C?style=for-the-badge&logo=paypal&logoColor=white)](https://paypal.me/paypal.me/MomenTarek1) 
 
   
 <!-- Proudly created with GPRM ( https://gprm.itsvg.in ) -->
@@ -189,14 +193,13 @@
   </table>
 </div>
 
-
-
-</div>
-
-</div>
-
-  <br><br>
-  
+## <picture><img src="https://raw.githubusercontent.com/ahmedbadawihosny/ahmedbadawihosny/main/Images/Statistics.gif?raw=true" width=5% valign="bottom"></picture> My Profile Statistics
+<table align="center">
+<tr border="none">
+<td width="50%" align="center">
+<div align="center">
+  <img src="https://github-readme-activity-graph.vercel.app/graph?username=ElmoGaber&radius=16&theme=tokyo-night&area=true&hide_border=true&order=5" height="300" alt="Activity Graph" />
+</div>  
   <!-- <img src="https://raw.githubusercontent.com/platane/snk/output/github-contribution-grid-snake-dark.svg" alt="GitHub Snake Animation" /> -->
 
   <picture>
@@ -204,12 +207,10 @@
     <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/mohamed20384/mohamed20384/output/pacman-contribution-graph.svg">
     <img alt="pacman contribution graph" src="https://raw.githubusercontent.com/mohamed20384/mohamed20384/output/pacman-contribution-graph.svg">
   </picture>
-
+  </div>
+<!-- Footer Banner -->
+<footer>
+  <img src="https://capsule-render.vercel.app/api?type=waving&ccolor=gradient&text=&fontColor=ffffff&animation=fadeIn&height=100&section=footer" alt="Footer" />
+</footer>
 
 </div>
-
-
-
----
-
-
