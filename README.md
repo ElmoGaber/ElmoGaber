@@ -193,7 +193,7 @@
   </table>
 </div>
 
-## <picture><img src="https://raw.githubusercontent.com/ahmedbadawihosny/ahmedbadawihosny/main/Images/Statistics.gif?raw=true" width=5% valign="bottom"></picture> My Profile Statistics
+## <picture><img src="https://raw.githubusercontent.com/ElmoGaber/ElmoGaber/main/Images/Statistics.gif?raw=true" width=5% valign="bottom"></picture> My Profile Statistics
 <table align="center">
 <tr border="none">
 <td width="50%" align="center">
