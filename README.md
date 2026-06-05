@@ -193,13 +193,12 @@
   </table>
 </div>
 
-## <picture><img src="https://raw.githubusercontent.com/ElmoGaber/ElmoGaber/main/Images/Statistics.gif?raw=true" width=5% valign="bottom"></picture> My Profile Statistics
+## <picture><img src="https://raw.githubusercontent.com/ahmedbadawihosny/ahmedbadawihosny/main/Images/Statistics.gif?raw=true" width=5% valign="bottom"></picture> My Profile Statistics
 <table align="center">
 <tr border="none">
 <td width="50%" align="center">
 <div align="center">
-  <img src="https://github-readme-activity-graph.vercel.app/graph?username=ElmoGaber&radius=16&theme=tokyo-night&area=true&hide_border=true&order=5" height="300" alt="Activity Graph" />
-</div>  
+  <img src="https://github-readme-activity-graph.vercel.app/graph?username=ElmoGaber&theme=tokyo-night&area=true&hide_border=true" alt="Activity Graph" /></div>  
   <!-- <img src="https://raw.githubusercontent.com/platane/snk/output/github-contribution-grid-snake-dark.svg" alt="GitHub Snake Animation" /> -->
 
   <picture>
