@@ -14,7 +14,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Generate Activity Graph
         env:
@@ -40,9 +40,11 @@ jobs:
               contributionsCollection(from: $from, to: $to) {
                 contributionCalendar {
                   totalContributions
-                  contributionDays {
-                    date
-                    contributionCount
+                  weeks {
+                    contributionDays {
+                      date
+                     contributionCount
+                    }
                   }
                 }
               }
@@ -77,8 +79,8 @@ jobs:
           if "errors" in result:
               raise RuntimeError(json.dumps(result["errors"]))
 
-          days = result["data"]["user"]["contributionsCollection"]["contributionCalendar"]["contributionDays"]
-
+          weeks = result["data"]["user"]["contributionsCollection"]["contributionCalendar"]["weeks"]
+          days = [day for week in weeks for day in week["contributionDays"]]
           counts = {
               day["date"]: day["contributionCount"]
               for day in days
