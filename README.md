@@ -185,10 +185,13 @@
 <td width="50%" align="center">
 <div align="center">
 
+  <p align="center">
   <img
-  src="https://raw.githubusercontent.com/ElmoGaber/ElmoGaber/main/assets/activity-graph.svg"
-  alt="GitHub Activity Graph"
+    src="https://raw.githubusercontent.com/ElmoGaber/ElmoGaber/main/assets/activity-graph.svg?v=2"
+    alt="GitHub Activity Graph"
+    width="100%"
   />
+  </p>
 
 </div>  
   <!-- <img src="https://raw.githubusercontent.com/platane/snk/output/github-contribution-grid-snake-dark.svg" alt="GitHub Snake Animation" /> -->
