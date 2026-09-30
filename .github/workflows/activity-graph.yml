@@ -1,0 +1,244 @@
+name: Update Activity Graph
+
+on:
+  schedule:
+    - cron: "0 0 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-graph:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Generate Activity Graph
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          mkdir -p assets
+
+          cat > /tmp/generate_graph.py <<'PY'
+          import json
+          import os
+          import urllib.request
+          from datetime import datetime, timedelta, timezone
+          from xml.sax.saxutils import escape
+
+          username = "ElmoGaber"
+
+          end = datetime.now(timezone.utc).date()
+          start = end - timedelta(days=364)
+
+          query = """
+          query($login: String!, $from: DateTime!, $to: DateTime!) {
+            user(login: $login) {
+              contributionsCollection(from: $from, to: $to) {
+                contributionCalendar {
+                  totalContributions
+                  contributionDays {
+                    date
+                    contributionCount
+                  }
+                }
+              }
+            }
+          }
+          """
+
+          variables = {
+              "login": username,
+              "from": f"{start}T00:00:00Z",
+              "to": f"{end}T23:59:59Z"
+          }
+
+          payload = json.dumps({
+              "query": query,
+              "variables": variables
+          }).encode()
+
+          request = urllib.request.Request(
+              "https://api.github.com/graphql",
+              data=payload,
+              headers={
+                  "Authorization": f"Bearer {os.environ['GITHUB_TOKEN']}",
+                  "Content-Type": "application/json",
+                  "User-Agent": "github-activity-graph"
+              }
+          )
+
+          with urllib.request.urlopen(request) as response:
+              result = json.load(response)
+
+          if "errors" in result:
+              raise RuntimeError(json.dumps(result["errors"]))
+
+          days = result["data"]["user"]["contributionsCollection"]["contributionCalendar"]["contributionDays"]
+
+          counts = {
+              day["date"]: day["contributionCount"]
+              for day in days
+          }
+
+          dates = []
+          current = start
+
+          while current <= end:
+              dates.append(current)
+              current += timedelta(days=1)
+
+          values = [counts.get(str(d), 0) for d in dates]
+
+          width = 1200
+          height = 360
+
+          left = 70
+          right = 30
+          top = 45
+          bottom = 55
+
+          chart_width = width - left - right
+          chart_height = height - top - bottom
+
+          max_value = max(values) if values else 1
+
+          if max_value == 0:
+              max_value = 1
+
+          def x(index):
+              if len(values) <= 1:
+                  return left
+              return left + (index / (len(values) - 1)) * chart_width
+
+          def y(value):
+              return top + chart_height - (value / max_value) * chart_height
+
+          svg = []
+
+          svg.append(
+              f'<svg xmlns="http://www.w3.org/2000/svg" '
+              f'width="{width}" height="{height}" '
+              f'viewBox="0 0 {width} {height}">'
+          )
+
+          svg.append(
+              '<rect width="100%" height="100%" rx="12" '
+              'fill="#0d1117"/>'
+          )
+
+          svg.append(
+              '<text x="70" y="25" fill="#c9d1d9" '
+              'font-family="Arial, sans-serif" font-size="15">'
+              'Commits per day'
+              '</text>'
+          )
+
+          # Grid + Y labels
+          steps = 5
+
+          for i in range(steps + 1):
+              value = round(max_value * i / steps)
+              yy = y(value)
+
+              svg.append(
+                  f'<line x1="{left}" y1="{yy:.2f}" '
+                  f'x2="{width-right}" y2="{yy:.2f}" '
+                  'stroke="#21262d" stroke-width="1"/>'
+              )
+
+              svg.append(
+                  f'<text x="{left-12}" y="{yy+4:.2f}" '
+                  'text-anchor="end" fill="#8b949e" '
+                  'font-family="Arial, sans-serif" font-size="11">'
+                  f'{value}</text>'
+              )
+
+          # X-axis
+          svg.append(
+              f'<line x1="{left}" y1="{top+chart_height}" '
+              f'x2="{width-right}" y2="{top+chart_height}" '
+              'stroke="#30363d" stroke-width="1"/>'
+          )
+
+          # Area
+          points = []
+
+          for i, value in enumerate(values):
+              points.append(f"{x(i):.2f},{y(value):.2f}")
+
+          area_points = (
+              f"{left},{top+chart_height} "
+              + " ".join(points)
+              + f" {width-right},{top+chart_height}"
+          )
+
+          svg.append(
+              f'<polygon points="{area_points}" '
+              'fill="#58a6ff" opacity="0.12"/>'
+          )
+
+          # Line
+          svg.append(
+              f'<polyline points="{" ".join(points)}" '
+              'fill="none" stroke="#58a6ff" '
+              'stroke-width="2.5" stroke-linejoin="round"/>'
+          )
+
+          # Month labels
+          last_month = None
+
+          for i, date in enumerate(dates):
+              month = date.strftime("%b")
+
+              if month != last_month:
+                  svg.append(
+                      f'<text x="{x(i):.2f}" y="{height-20}" '
+                      'fill="#8b949e" '
+                      'font-family="Arial, sans-serif" '
+                      'font-size="11">'
+                      f'{escape(month)}</text>'
+                  )
+
+                  last_month = month
+
+          # Points for active days
+          for i, value in enumerate(values):
+              if value > 0:
+                  svg.append(
+                      f'<circle cx="{x(i):.2f}" cy="{y(value):.2f}" '
+                      'r="3" fill="#58a6ff"/>'
+                  )
+
+          svg.append(
+              f'<text x="{width-right}" y="25" '
+              'text-anchor="end" fill="#8b949e" '
+              'font-family="Arial, sans-serif" font-size="11">'
+              f'Last 365 days · Total: {sum(values)}'
+              '</text>'
+          )
+
+          svg.append("</svg>")
+
+          with open("assets/activity-graph.svg", "w", encoding="utf-8") as f:
+              f.write("\n".join(svg))
+          PY
+
+          python /tmp/generate_graph.py
+
+      - name: Commit updated graph
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add assets/activity-graph.svg
+
+          if git diff --cached --quiet; then
+            echo "No graph changes."
+          else
+            git commit -m "Update activity graph"
+            git push
+          fi
