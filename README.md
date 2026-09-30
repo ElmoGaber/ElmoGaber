@@ -187,7 +187,7 @@
 
   <p align="center">
   <img
-    src="https://raw.githubusercontent.com/ElmoGaber/ElmoGaber/main/assets/activity-graph.svg?v=2"
+    src="https://raw.githubusercontent.com/ElmoGaber/ElmoGaber/23c1dcee72984b74df8aecc57d8dbec0583fa9ad/assets/activity-graph.svg"
     alt="GitHub Activity Graph"
     width="100%"
   />
