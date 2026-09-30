@@ -184,7 +184,10 @@
 <tr border="none">
 <td width="50%" align="center">
 <div align="center">
-  <img src="https://github-readme-activity-graph.vercel.app/graph?username=ElmoGaber&theme=tokyo-night&area=true&hide_border=true" alt="Activity Graph" /></div>  
+
+  <img src="https://github-readme-activity-graph.vercel.app/graph?username=ElmoGaber&theme=tokyo-night&area=true&hide_border=true" alt="Activity Graph" />
+
+</div>  
   <!-- <img src="https://raw.githubusercontent.com/platane/snk/output/github-contribution-grid-snake-dark.svg" alt="GitHub Snake Animation" /> -->
 
   <picture>
