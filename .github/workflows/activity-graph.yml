@@ -31,8 +31,16 @@ jobs:
 
           username = "ElmoGaber"
 
+          # ---------------------------------------------------------
+          # Date range
+          # ---------------------------------------------------------
+
           end = datetime.now(timezone.utc).date()
           start = end - timedelta(days=364)
+
+          # ---------------------------------------------------------
+          # GitHub GraphQL
+          # ---------------------------------------------------------
 
           query = """
           query($login: String!, $from: DateTime!, $to: DateTime!) {
@@ -43,7 +51,7 @@ jobs:
                   weeks {
                     contributionDays {
                       date
-                     contributionCount
+                      contributionCount
                     }
                   }
                 }
@@ -79,12 +87,29 @@ jobs:
           if "errors" in result:
               raise RuntimeError(json.dumps(result["errors"]))
 
-          weeks = result["data"]["user"]["contributionsCollection"]["contributionCalendar"]["weeks"]
-          days = [day for week in weeks for day in week["contributionDays"]]
+          calendar = (
+              result["data"]
+              ["user"]
+              ["contributionsCollection"]
+              ["contributionCalendar"]
+          )
+
+          weeks = calendar["weeks"]
+
+          days = [
+              day
+              for week in weeks
+              for day in week["contributionDays"]
+          ]
+
           counts = {
               day["date"]: day["contributionCount"]
               for day in days
           }
+
+          # ---------------------------------------------------------
+          # Build complete date range
+          # ---------------------------------------------------------
 
           dates = []
           current = start
@@ -93,15 +118,39 @@ jobs:
               dates.append(current)
               current += timedelta(days=1)
 
-          values = [counts.get(str(d), 0) for d in dates]
+          values = [
+              counts.get(str(date), 0)
+              for date in dates
+          ]
+
+          total = sum(values)
+          active_days = sum(value > 0 for value in values)
+
+          peak = max(values) if values else 0
+
+          peak_index = (
+              values.index(peak)
+              if peak > 0
+              else 0
+          )
+
+          peak_date = (
+              dates[peak_index]
+              if values
+              else end
+          )
+
+          # ---------------------------------------------------------
+          # SVG dimensions
+          # ---------------------------------------------------------
 
           width = 1200
-          height = 360
+          height = 430
 
-          left = 70
-          right = 30
-          top = 45
-          bottom = 55
+          left = 72
+          right = 32
+          top = 108
+          bottom = 62
 
           chart_width = width - left - right
           chart_height = height - top - bottom
@@ -111,122 +160,498 @@ jobs:
           if max_value == 0:
               max_value = 1
 
+          # ---------------------------------------------------------
+          # Coordinate helpers
+          # ---------------------------------------------------------
+
           def x(index):
               if len(values) <= 1:
                   return left
-              return left + (index / (len(values) - 1)) * chart_width
+
+              return (
+                  left
+                  + (index / (len(values) - 1))
+                  * chart_width
+              )
 
           def y(value):
-              return top + chart_height - (value / max_value) * chart_height
+              return (
+                  top
+                  + chart_height
+                  - (value / max_value)
+                  * chart_height
+              )
+
+          # ---------------------------------------------------------
+          # SVG
+          # ---------------------------------------------------------
 
           svg = []
 
           svg.append(
-              f'<svg xmlns="http://www.w3.org/2000/svg" '
-              f'width="{width}" height="{height}" '
-              f'viewBox="0 0 {width} {height}">'
+              '<svg xmlns="http://www.w3.org/2000/svg" '
+              f'width="100%" height="{height}" '
+              f'viewBox="0 0 {width} {height}" '
+              'preserveAspectRatio="xMidYMid meet">'
           )
 
-          svg.append(
-              '<rect width="100%" height="100%" rx="12" '
-              'fill="#0d1117"/>'
-          )
+          # ---------------------------------------------------------
+          # Definitions
+          # ---------------------------------------------------------
+
+          svg.append("""
+          <defs>
+
+            <linearGradient
+              id="areaGradient"
+              x1="0"
+              y1="0"
+              x2="0"
+              y2="1"
+            >
+              <stop
+                offset="0%"
+                stop-color="#58a6ff"
+                stop-opacity="0.42"
+              />
+              <stop
+                offset="70%"
+                stop-color="#58a6ff"
+                stop-opacity="0.12"
+              />
+              <stop
+                offset="100%"
+                stop-color="#58a6ff"
+                stop-opacity="0"
+              />
+            </linearGradient>
+
+            <linearGradient
+              id="lineGradient"
+              x1="0"
+              y1="0"
+              x2="1"
+              y2="0"
+            >
+              <stop
+                offset="0%"
+                stop-color="#58a6ff"
+              />
+              <stop
+                offset="50%"
+                stop-color="#79c0ff"
+              />
+              <stop
+                offset="100%"
+                stop-color="#a5d6ff"
+              />
+            </linearGradient>
+
+            <filter
+              id="softShadow"
+              x="-20%"
+              y="-20%"
+              width="140%"
+              height="140%"
+            >
+              <feDropShadow
+                dx="0"
+                dy="2"
+                stdDeviation="4"
+                flood-color="#000000"
+                flood-opacity="0.25"
+              />
+            </filter>
+
+          </defs>
+          """)
+
+          # ---------------------------------------------------------
+          # Background
+          # ---------------------------------------------------------
 
           svg.append(
-              '<text x="70" y="25" fill="#c9d1d9" '
-              'font-family="Arial, sans-serif" font-size="15">'
-              'Commits per day'
+              '<rect '
+              'x="0" y="0" '
+              'width="100%" '
+              'height="100%" '
+              'rx="18" '
+              'fill="#0d1117" '
+              'stroke="#21262d" '
+              'stroke-width="1"/>'
+          )
+
+          # ---------------------------------------------------------
+          # Header
+          # ---------------------------------------------------------
+
+          svg.append(
+              '<text '
+              'x="36" y="38" '
+              'fill="#f0f6fc" '
+              'font-family="Arial, sans-serif" '
+              'font-size="20" '
+              'font-weight="700">'
+              'GitHub Activity'
               '</text>'
           )
 
-          # Grid + Y labels
+          svg.append(
+              '<text '
+              'x="36" y="61" '
+              'fill="#8b949e" '
+              'font-family="Arial, sans-serif" '
+              'font-size="12">'
+              'Daily contributions · Last 365 days'
+              '</text>'
+          )
+
+          # ---------------------------------------------------------
+          # Header statistics
+          # ---------------------------------------------------------
+
+          stats = [
+              ("Total Contributions", str(total)),
+              ("Active Days", str(active_days)),
+              ("Peak Day", str(peak))
+          ]
+
+          stat_x = [650, 835, 1020]
+
+          for i, (label, value) in enumerate(stats):
+
+              box_x = stat_x[i]
+
+              svg.append(
+                  f'<rect '
+                  f'x="{box_x}" y="18" '
+                  'width="155" height="55" '
+                  'rx="10" '
+                  'fill="#161b22" '
+                  'stroke="#30363d" '
+                  'stroke-width="1"/>'
+              )
+
+              svg.append(
+                  f'<text '
+                  f'x="{box_x + 12}" y="37" '
+                  'fill="#8b949e" '
+                  'font-family="Arial, sans-serif" '
+                  'font-size="10">'
+                  f'{escape(label)}'
+                  '</text>'
+              )
+
+              svg.append(
+                  f'<text '
+                  f'x="{box_x + 12}" y="58" '
+                  'fill="#f0f6fc" '
+                  'font-family="Arial, sans-serif" '
+                  'font-size="16" '
+                  'font-weight="700">'
+                  f'{escape(value)}'
+                  '</text>'
+              )
+
+          # ---------------------------------------------------------
+          # Chart background
+          # ---------------------------------------------------------
+
+          svg.append(
+              f'<rect '
+              f'x="{left}" '
+              f'y="{top}" '
+              f'width="{chart_width}" '
+              f'height="{chart_height}" '
+              f'rx="10" '
+              f'fill="#0d1117"/>'
+          )
+
+          # ---------------------------------------------------------
+          # Y-axis grid
+          # ---------------------------------------------------------
+
           steps = 5
 
           for i in range(steps + 1):
+
               value = round(max_value * i / steps)
               yy = y(value)
 
               svg.append(
-                  f'<line x1="{left}" y1="{yy:.2f}" '
-                  f'x2="{width-right}" y2="{yy:.2f}" '
-                  'stroke="#21262d" stroke-width="1"/>'
+                  f'<line '
+                  f'x1="{left}" '
+                  f'y1="{yy:.2f}" '
+                  f'x2="{width - right}" '
+                  f'y2="{yy:.2f}" '
+                  'stroke="#21262d" '
+                  'stroke-width="1"/>'
               )
 
               svg.append(
-                  f'<text x="{left-12}" y="{yy+4:.2f}" '
-                  'text-anchor="end" fill="#8b949e" '
-                  'font-family="Arial, sans-serif" font-size="11">'
-                  f'{value}</text>'
+                  f'<text '
+                  f'x="{left - 14}" '
+                  f'y="{yy + 4:.2f}" '
+                  'text-anchor="end" '
+                  'fill="#8b949e" '
+                  'font-family="Arial, sans-serif" '
+                  'font-size="11">'
+                  f'{value}'
+                  '</text>'
               )
 
-          # X-axis
-          svg.append(
-              f'<line x1="{left}" y1="{top+chart_height}" '
-              f'x2="{width-right}" y2="{top+chart_height}" '
-              'stroke="#30363d" stroke-width="1"/>'
-          )
+          # ---------------------------------------------------------
+          # Month labels + vertical guides
+          # ---------------------------------------------------------
 
-          # Area
-          points = []
-
-          for i, value in enumerate(values):
-              points.append(f"{x(i):.2f},{y(value):.2f}")
-
-          area_points = (
-              f"{left},{top+chart_height} "
-              + " ".join(points)
-              + f" {width-right},{top+chart_height}"
-          )
-
-          svg.append(
-              f'<polygon points="{area_points}" '
-              'fill="#58a6ff" opacity="0.12"/>'
-          )
-
-          # Line
-          svg.append(
-              f'<polyline points="{" ".join(points)}" '
-              'fill="none" stroke="#58a6ff" '
-              'stroke-width="2.5" stroke-linejoin="round"/>'
-          )
-
-          # Month labels
           last_month = None
 
           for i, date in enumerate(dates):
-              month = date.strftime("%b")
 
-              if month != last_month:
+              month_key = date.strftime("%Y-%m")
+
+              if month_key != last_month:
+
+                  # Month guide
                   svg.append(
-                      f'<text x="{x(i):.2f}" y="{height-20}" '
+                      f'<line '
+                      f'x1="{x(i):.2f}" '
+                      f'y1="{top}" '
+                      f'x2="{x(i):.2f}" '
+                      f'y2="{top + chart_height}" '
+                      'stroke="#21262d" '
+                      'stroke-width="1" '
+                      'stroke-dasharray="3 6" '
+                      'opacity="0.65"/>'
+                  )
+
+                  # Month label
+                  svg.append(
+                      f'<text '
+                      f'x="{x(i):.2f}" '
+                      f'y="{height - 26}" '
                       'fill="#8b949e" '
                       'font-family="Arial, sans-serif" '
-                      'font-size="11">'
-                      f'{escape(month)}</text>'
+                      'font-size="11" '
+                      'font-weight="600">'
+                      f'{escape(date.strftime("%b"))}'
+                      '</text>'
                   )
 
-                  last_month = month
+                  last_month = month_key
 
-          # Points for active days
-          for i, value in enumerate(values):
-              if value > 0:
-                  svg.append(
-                      f'<circle cx="{x(i):.2f}" cy="{y(value):.2f}" '
-                      'r="3" fill="#58a6ff"/>'
-                  )
+          # ---------------------------------------------------------
+          # Area
+          # ---------------------------------------------------------
+
+          points = [
+              f"{x(i):.2f},{y(value):.2f}"
+              for i, value in enumerate(values)
+          ]
+
+          area_points = (
+              f"{left},{top + chart_height} "
+              + " ".join(points)
+              + f" {width - right},{top + chart_height}"
+          )
 
           svg.append(
-              f'<text x="{width-right}" y="25" '
-              'text-anchor="end" fill="#8b949e" '
-              'font-family="Arial, sans-serif" font-size="11">'
-              f'Last 365 days · Total: {sum(values)}'
+              f'<polygon '
+              f'points="{area_points}" '
+              'fill="url(#areaGradient)"/>'
+          )
+
+          # ---------------------------------------------------------
+          # Main line
+          # ---------------------------------------------------------
+
+          svg.append(
+              f'<polyline '
+              f'points="{" ".join(points)}" '
+              'fill="none" '
+              'stroke="url(#lineGradient)" '
+              'stroke-width="2.5" '
+              'stroke-linejoin="round" '
+              'stroke-linecap="round"/>'
+          )
+
+          # ---------------------------------------------------------
+          # Activity points
+          #
+          # Instead of rendering 365 points:
+          # - inactive days have no point
+          # - active days have small points
+          # - only peak gets a larger highlight
+          # ---------------------------------------------------------
+
+          for i, value in enumerate(values):
+
+              if value <= 0:
+                  continue
+
+              date = dates[i]
+
+              # Peak point
+              if value == peak and peak > 0:
+
+                  svg.append(
+                      f'<circle '
+                      f'cx="{x(i):.2f}" '
+                      f'cy="{y(value):.2f}" '
+                      'r="6" '
+                      'fill="#58a6ff" '
+                      'stroke="#f0f6fc" '
+                      'stroke-width="2" '
+                      'filter="url(#softShadow)">'
+                      f'<title>'
+                      f'{escape(date.strftime("%B %d, %Y"))}'
+                      f' — {value} contributions'
+                      f'</title>'
+                      '</circle>'
+                  )
+
+              else:
+
+                  # Normal active day
+                  svg.append(
+                      f'<circle '
+                      f'cx="{x(i):.2f}" '
+                      f'cy="{y(value):.2f}" '
+                      'r="3" '
+                      'fill="#58a6ff" '
+                      'opacity="0.9">'
+                      f'<title>'
+                      f'{escape(date.strftime("%B %d, %Y"))}'
+                      f' — {value} contributions'
+                      f'</title>'
+                      '</circle>'
+                  )
+
+          # ---------------------------------------------------------
+          # Peak annotation
+          # ---------------------------------------------------------
+
+          if peak > 0:
+
+              px = x(peak_index)
+              py = y(peak)
+
+              label_x = min(
+                  max(px - 55, left),
+                  width - right - 110
+              )
+
+              label_y = max(py - 38, top + 18)
+
+              svg.append(
+                  f'<line '
+                  f'x1="{px:.2f}" '
+                  f'y1="{py:.2f}" '
+                  f'x2="{px:.2f}" '
+                  f'y2="{label_y + 8:.2f}" '
+                  'stroke="#58a6ff" '
+                  'stroke-width="1" '
+                  'stroke-dasharray="3 3"/>'
+              )
+
+              svg.append(
+                  f'<rect '
+                  f'x="{label_x:.2f}" '
+                  f'y="{label_y - 16:.2f}" '
+                  'width="110" '
+                  'height="24" '
+                  'rx="6" '
+                  'fill="#161b22" '
+                  'stroke="#30363d"/>'
+              )
+
+              svg.append(
+                  f'<text '
+                  f'x="{label_x + 55:.2f}" '
+                  f'y="{label_y:.2f}" '
+                  'text-anchor="middle" '
+                  'fill="#f0f6fc" '
+                  'font-family="Arial, sans-serif" '
+                  'font-size="10" '
+                  'font-weight="600">'
+                  f'Peak · {peak}'
+                  '</text>'
+              )
+
+          # ---------------------------------------------------------
+          # Today marker
+          # ---------------------------------------------------------
+
+          today_x = x(len(values) - 1)
+
+          svg.append(
+              f'<line '
+              f'x1="{today_x:.2f}" '
+              f'y1="{top}" '
+              f'x2="{today_x:.2f}" '
+              f'y2="{top + chart_height}" '
+              'stroke="#58a6ff" '
+              'stroke-width="1" '
+              'stroke-dasharray="4 5" '
+              'opacity="0.45"/>'
+          )
+
+          svg.append(
+              f'<text '
+              f'x="{today_x:.2f}" '
+              f'y="{top - 8}" '
+              'text-anchor="end" '
+              'fill="#58a6ff" '
+              'font-family="Arial, sans-serif" '
+              'font-size="10">'
+              'Today'
               '</text>'
+          )
+
+          # ---------------------------------------------------------
+          # Footer
+          # ---------------------------------------------------------
+
+          svg.append(
+              f'<text '
+              f'x="{width - right}" '
+              f'y="{height - 26}" '
+              'text-anchor="end" '
+              'fill="#6e7681" '
+              'font-family="Arial, sans-serif" '
+              'font-size="10">'
+              f'Peak: {peak} on {escape(peak_date.strftime("%b %d, %Y"))}'
+              '</text>'
+          )
+
+          # Accessibility description
+          svg.append(
+              '<desc>'
+              f'{escape(username)} GitHub activity graph. '
+              f'{total} total contributions over the last 365 days. '
+              f'Peak day had {peak} contributions.'
+              '</desc>'
           )
 
           svg.append("</svg>")
 
-          with open("assets/activity-graph.svg", "w", encoding="utf-8") as f:
-              f.write("\n".join(svg))
+          # ---------------------------------------------------------
+          # Write SVG
+          # ---------------------------------------------------------
+
+          with open(
+              "assets/activity-graph.svg",
+              "w",
+              encoding="utf-8"
+          ) as file:
+              file.write("\n".join(svg))
+
+          print(
+              f"Generated graph: "
+              f"{total} contributions, "
+              f"{active_days} active days, "
+              f"peak {peak}"
+          )
           PY
 
           python /tmp/generate_graph.py
