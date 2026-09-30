@@ -178,23 +178,31 @@
   </table>
 </div>
 
-## <picture><img src="https://raw.githubusercontent.com/ahmedbadawihosny/ahmedbadawihosny/main/Images/Statistics.gif?raw=true" width=5% valign="bottom"></picture> My Profile Statistics
+## <picture><img src="https://raw.githubusercontent.com/ahmedbadawihosny/ahmedbadawihosny/main/Images/Statistics.gif?raw=true" width="5%" valign="bottom"></picture> My Profile Statistics
+
 <table align="center">
 <tr border="none">
-<td width="50%" align="center">
-<div align="center">
-  <img src="https://github-readme-activity-graph.vercel.app/graph?username=ElmoGaber&theme=tokyo-night&area=true&hide_border=true" alt="Activity Graph" /></div>  
-  <!-- <img src="https://raw.githubusercontent.com/platane/snk/output/github-contribution-grid-snake-dark.svg" alt="GitHub Snake Animation" /> -->
 
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/mohamed20384/mohamed20384/output/pacman-contribution-graph-dark.svg">
-    <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/mohamed20384/mohamed20384/output/pacman-contribution-graph.svg">
-    <img alt="pacman contribution graph" src="https://raw.githubusercontent.com/mohamed20384/mohamed20384/output/pacman-contribution-graph.svg">
-  </picture>
-  </div>
-<!-- Footer Banner -->
+<td width="50%" align="center">
+
+<div align="center">
+
+  <img 
+    src="https://ghchart.rshah.org/2f81f7/ElmoGaber"
+    alt="GitHub Contribution Graph"
+  />
+
+</div>
+
+</td>
+</tr>
+</table>
+
 <footer>
-  <img src="https://capsule-render.vercel.app/api?type=waving&ccolor=gradient&text=&fontColor=ffffff&animation=fadeIn&height=100&section=footer" alt="Footer" />
+  <img 
+    src="https://capsule-render.vercel.app/api?type=waving&ccolor=gradient&text=&fontColor=ffffff&animation=fadeIn&height=100&section=footer" 
+    alt="Footer"
+  />
 </footer>
 
 </div>
