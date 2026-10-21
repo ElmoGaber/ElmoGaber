@@ -29,7 +29,7 @@
   </p>
 
   <p align = "center">
-        <a href="https://drive.google.com/file/d/1AeSECFDAIj7AlTnsnXRFaplJoCtJ0jyK/view?usp=sharing">
+        <a href="https://drive.google.com/file/d/1_2ArYX1wVP-YIxO1ooXNfWEtIpTJWJYg/view?usp=sharing">
       <img src="https://img.shields.io/badge/My CV-004520?style=flat-square&logo=googledrive&logoColor=white" style="height:32px; object-fit:contain;"/></a> &nbsp;
     <a href="https://elmogaber.github.io/portfolio/">
       <img src="https://img.shields.io/badge/My Portfolio-00307A?style=flat-square&logo=linkfire&logoColor=white" style="height:32px; object-fit:contain;"/></a>
